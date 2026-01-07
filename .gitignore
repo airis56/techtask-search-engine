@@ -1,0 +1,34 @@
+# --- Dependencies ---
+node_modules/
+**/node_modules/
+
+# --- Environment & Secrets ---
+.env
+.env.local
+.env.*.local
+*.env
+
+# --- Build & Output ---
+client/dist/
+server/dist/
+public/uploads/*
+!public/uploads/.gitkeep
+
+# --- IDE & Editor ---
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# --- Logs ---
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/
+*.log
+
+# --- Misc ---
+.eslintcache
+.stylelintcache
