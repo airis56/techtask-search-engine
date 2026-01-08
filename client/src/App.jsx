@@ -1,4 +1,8 @@
+import { Routes, Route } from "react-router-dom";
+
 import Header from "./components/header/Header";
+import Home from "./pages/Home";
+import SearchResults from "./pages/SearchResults";
 
 export default function App() {
     return (
@@ -6,9 +10,10 @@ export default function App() {
             <Header />
 
             <main className="max-w-7xl mx-auto px-6 py-8 text-white">
-                <h1 className="text-2xl font-semibold">
-                    Some text goes here
-                </h1>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/list" element={<SearchResults />} />
+                </Routes>
             </main>
         </div>
     );
