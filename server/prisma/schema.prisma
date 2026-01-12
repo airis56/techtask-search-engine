@@ -1,0 +1,72 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client"
+  output   = "./generated/"
+}
+
+model game {
+  id          String    @id @default(uuid())
+  title       String
+  description String?
+  baseImage   String
+  products    product[] // Relation to specific listings
+  createdAt   DateTime  @default(now())
+}
+
+model product {
+  id                 String   @id @default(uuid())
+  gameId             String
+  game               game     @relation(fields: [gameId], references: [id])
+
+  // Specifics for this listing
+  platform            platform
+  region              region
+  distributionType    distributionType
+
+  // Pricing
+  currentPrice       Decimal  @db.Decimal(10, 2)
+  originalPrice      Decimal  @db.Decimal(10, 2)
+  currency           String   @default("EUR")
+
+  cashbackAmount     Decimal? @db.Decimal(10, 2)
+
+  stockStatus stockStatus @default(IN_STOCK)
+
+  updatedAt          DateTime @updatedAt
+
+  @@index([gameId])
+}
+
+enum platform {
+  PC
+  XBOX
+  PLAYSTATION
+  NINTENDO
+}
+
+enum region {
+  GLOBAL
+  EUROPE
+  USA
+  ASIA
+}
+
+enum distributionType {
+  KEY
+  ACCOUNT
+}
+
+enum stockStatus {
+  IN_STOCK
+  OUT_OF_STOCK
+  LIMITED
+}
