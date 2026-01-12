@@ -43,3 +43,7 @@ CREATE INDEX "product_gameId_idx" ON "product"("gameId");
 
 -- AddForeignKey
 ALTER TABLE "product" ADD CONSTRAINT "product_gameId_fkey" FOREIGN KEY ("gameId") REFERENCES "game"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+
+CREATE INDEX IF NOT EXISTS game_title_fuzzy_idx ON "game" USING gin (title gin_trgm_ops);
