@@ -1,8 +1,10 @@
 const API_BASE_URL = 'http://localhost:5000';
 
 export const fetchGames = async (searchQuery) => {
-    const search = searchQuery ? `?search=${searchQuery}` : '';
-    const url = `${API_BASE_URL}/list${search}`;
+    const cleanQuery = searchQuery?.trim();
+    const url = cleanQuery
+        ? `${API_BASE_URL}/list?search=${encodeURIComponent(cleanQuery)}`
+        : `${API_BASE_URL}/list`;
 
     const response = await fetch(url);
     if (!response.ok) {
