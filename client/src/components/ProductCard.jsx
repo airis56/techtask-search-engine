@@ -47,7 +47,10 @@ export default function ProductCard({ item }) {
                                     From
                                     <span className="line-through ml-1">€{item.originalPrice}</span>
                                     <span className="ml-1 text-[0.8rem] font-bold text-green-400">
-                                        -{calculateDiscount(item.originalPrice, item.currentPrice).toFixed(0)}%
+                                        {/* dont divide by 0 */}
+                                        -{item.originalPrice > 0
+                                            ? calculateDiscount(item.originalPrice, item.currentPrice).toFixed(0)
+                                            : ''}
                                     </span>
                                 </>
                             ) : (
