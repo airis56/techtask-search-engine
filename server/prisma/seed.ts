@@ -13,7 +13,7 @@ async function main() {
     const gamesData = [
         {
             title: "Split Fiction",
-            baseImage: "/uploads/split-fiction-base.jpg",
+            baseImage: "https://jattnvwxvfmassrnzkgh.supabase.co/storage/v1/object/public/game_pictures/split-fiction.jpg",
             products: [
                 {
                     platform: "PC",
@@ -43,7 +43,7 @@ async function main() {
         },
         {
             title: "FIFA 23",
-            baseImage: "/uploads/fifa-23.jpg",
+            baseImage: "https://jattnvwxvfmassrnzkgh.supabase.co/storage/v1/object/public/game_pictures/fifa-23.jpg",
             products: [
                 {
                     platform: "PC",
@@ -64,7 +64,7 @@ async function main() {
         },
         {
             title: "Red Dead Redemption 2",
-            baseImage: "/uploads/rdr2.jpg",
+            baseImage: "https://jattnvwxvfmassrnzkgh.supabase.co/storage/v1/object/public/game_pictures/rdr-2.jpg",
             products: [
                 {
                     platform: "PC",
@@ -74,12 +74,18 @@ async function main() {
                     originalPrice: 59.99,
                     cashbackAmount: 2.10
                 },
-                {platform: "XBOX", region: "GLOBAL", distributionType: "KEY", currentPrice: 24.50, originalPrice: 59.99}
+                {
+                    platform: "XBOX",
+                    region: "GLOBAL",
+                    distributionType: "KEY",
+                    currentPrice: 24.50,
+                    originalPrice: 59.99
+                }
             ]
         },
         {
             title: "Cyberpunk 2077",
-            baseImage: "/uploads/cyberpunk.jpg",
+            baseImage: "https://jattnvwxvfmassrnzkgh.supabase.co/storage/v1/object/public/game_pictures/cyberpunk.jpg",
             products: [
                 {
                     platform: "PC",
@@ -100,7 +106,7 @@ async function main() {
         },
         {
             title: "Elden Ring",
-            baseImage: "/uploads/elden-ring.jpg",
+            baseImage: "https://jattnvwxvfmassrnzkgh.supabase.co/storage/v1/object/public/game_pictures/elden-ring.jpg",
             products: [
                 {
                     platform: "PC",
@@ -110,17 +116,29 @@ async function main() {
                     originalPrice: 59.99,
                     cashbackAmount: 4.20
                 },
-                {platform: "XBOX", region: "EUROPE", distributionType: "KEY", currentPrice: 38.50, originalPrice: 59.99}
+                {
+                    platform: "XBOX",
+                    region: "EUROPE",
+                    distributionType: "KEY",
+                    currentPrice: 38.50,
+                    originalPrice: 59.99
+                }
             ]
         },
         {
             title: "The Witcher 3: Wild Hunt",
-            baseImage: "/uploads/witcher3.jpg",
+            baseImage: "https://jattnvwxvfmassrnzkgh.supabase.co/storage/v1/object/public/game_pictures/witcher-3.jpg",
             products: [
-                {platform: "PC", region: "GLOBAL", distributionType: "KEY", currentPrice: 9.99, originalPrice: 29.99},
+                {
+                    platform: "PC",
+                    region: "GLOBAL",
+                    distributionType: "KEY",
+                    currentPrice: 9.99,
+                    originalPrice: 29.99
+                },
                 {
                     platform: "NINTENDO",
-                    region: "GLOBAL",
+                    region: "USA",
                     distributionType: "KEY",
                     currentPrice: 15.99,
                     originalPrice: 39.99
@@ -129,12 +147,18 @@ async function main() {
         },
         {
             title: "Minecraft",
-            baseImage: "/uploads/minecraft.jpg",
+            baseImage: "https://jattnvwxvfmassrnzkgh.supabase.co/storage/v1/object/public/game_pictures/minecraft.jpg",
             products: [
-                {platform: "PC", region: "GLOBAL", distributionType: "KEY", currentPrice: 23.50, originalPrice: 23.50},
+                {
+                    platform: "PC",
+                    region: "GLOBAL",
+                    distributionType: "KEY",
+                    currentPrice: 23.50,
+                    originalPrice: 23.50
+                },
                 {
                     platform: "NINTENDO",
-                    region: "GLOBAL",
+                    region: "USA",
                     distributionType: "KEY",
                     currentPrice: 28.00,
                     originalPrice: 29.99
@@ -143,7 +167,7 @@ async function main() {
         },
         {
             title: "Hogwarts Legacy",
-            baseImage: "/uploads/hogwarts.jpg",
+            baseImage: "https://jattnvwxvfmassrnzkgh.supabase.co/storage/v1/object/public/game_pictures/hogwarts.jpg",
             products: [
                 {
                     platform: "PC",
@@ -154,7 +178,7 @@ async function main() {
                     cashbackAmount: 5.00
                 },
                 {
-                    platform: "PLAYSTATION",
+                    platform: "XBOX",
                     region: "EUROPE",
                     distributionType: "KEY",
                     currentPrice: 49.99,
