@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { fetchGames } from '../utils/api';
 import ErrorMessage from "../components/ErrorMessage.jsx";
 import Loading from "../components/Loading.jsx";
+import ProductCard from "../components/ProductCard.jsx";
 
 export default function SearchResults () {
     const [searchParams] = useSearchParams();
@@ -29,17 +30,21 @@ export default function SearchResults () {
     }, [query]);
 
     // Clean conditional rendering
-    if (loading) return <Loading message={query ? `Ieškoma "${query}"...` : 'Ieškoma...'} />;
+    if (loading) return <Loading message={query ? `Searching for "${query}"...` : 'Searching...'} />;
     if (error) return <ErrorMessage message={error} onRetry={getGames} />;
 
     return (
-        <div className="flex justify-center w-full py-8">
+        <div className="flex justify-center w-full">
             <div className="w-full max-w-300 px-4">
-                <h2 className="text-white text-[1.4rem] mb-6">
-                    Rezultatai: <span className="font-bold">{results.length}</span>
+                <h2 className="text-white text-[1rem] mb-6">
+                    Results found: <span className="font-bold">{results.length}</span>
                 </h2>
 
-                {/* need to create i think a product card component and use here to display the games*/}
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    {results.map(item => (
+                        <ProductCard key={item.productId} item={item} />
+                    ))}
+                </div>
             </div>
         </div>
     );
