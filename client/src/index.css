@@ -27,7 +27,7 @@
   /* define colors used throughout the project right here */
   /* example: --color-primary-500: #4618ac; */
     --color-enebapurple: #4618ac;
-    --font-metropolis: 'Metropolis', sans-serif;
+    --font-metropolis: 'Metropolis', Arial, Helvetica, sans-serif;
 }
 
 /* Web-wide background color */
