@@ -10,40 +10,50 @@ datasource db {
 
 generator client {
   provider = "prisma-client"
-  output = "./generated/prisma"
+  output   = "./generated/prisma"
 }
 
 model game {
-  id          String    @id @default(uuid())
+  id          String       @id @default(uuid())
   title       String
   description String?
   baseImage   String
   products    product[] // Relation to specific listings
-  createdAt   DateTime  @default(now())
+  createdAt   DateTime     @default(now())
+  gameAlias   game_alias[]
 }
 
 model product {
-  id                 String   @id @default(uuid())
-  gameId             String
-  game               game     @relation(fields: [gameId], references: [id])
+  id     String @id @default(uuid())
+  gameId String
+  game   game   @relation(fields: [gameId], references: [id])
 
   // Specifics for this listing
-  platform            platform
-  region              region
-  distributionType    distributionType
+  platform         platform
+  region           region
+  distributionType distributionType
 
   // Pricing
-  currentPrice       Decimal  @db.Decimal(10, 2)
-  originalPrice      Decimal  @db.Decimal(10, 2)
-  currency           String   @default("EUR")
+  currentPrice  Decimal @db.Decimal(10, 2)
+  originalPrice Decimal @db.Decimal(10, 2)
+  currency      String  @default("EUR")
 
-  cashbackAmount     Decimal? @db.Decimal(10, 2)
+  cashbackAmount Decimal? @db.Decimal(10, 2)
 
   stockStatus stockStatus @default(IN_STOCK)
 
-  updatedAt          DateTime @updatedAt
+  updatedAt DateTime @updatedAt
 
   @@index([gameId])
+}
+
+model game_alias {
+  id     String @id @default(uuid())
+  alias  String
+  game   game   @relation(fields: [gameId], references: [id])
+  gameId String
+
+  @@index([alias])
 }
 
 enum platform {
