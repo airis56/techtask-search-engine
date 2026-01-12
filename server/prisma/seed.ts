@@ -3,11 +3,13 @@ import { prisma } from "../src/config/db";
 async function main() {
     await prisma.product.deleteMany();
     await prisma.game.deleteMany();
+    await prisma.game_alias.deleteMany();
 
     const gamesData = [
         {
             title: "Split Fiction",
             baseImage: "https://jattnvwxvfmassrnzkgh.supabase.co/storage/v1/object/public/game_pictures/split-fiction.jpg",
+            gameAlias: ["split fiction", "split", "sf", "split fiction games"],
             products: [
                 {
                     platform: "PC",
@@ -38,6 +40,7 @@ async function main() {
         {
             title: "FIFA 23",
             baseImage: "https://jattnvwxvfmassrnzkgh.supabase.co/storage/v1/object/public/game_pictures/fifa-23.jpg",
+            gameAlias: ["fifa 2023", "2023", "football", "soccer"],
             products: [
                 {
                     platform: "PC",
@@ -59,6 +62,7 @@ async function main() {
         {
             title: "Red Dead Redemption 2",
             baseImage: "https://jattnvwxvfmassrnzkgh.supabase.co/storage/v1/object/public/game_pictures/rdr-2.jpg",
+            gameAlias: ["rdr2", "rdr"],
             products: [
                 {
                     platform: "PC",
@@ -80,6 +84,7 @@ async function main() {
         {
             title: "Cyberpunk 2077",
             baseImage: "https://jattnvwxvfmassrnzkgh.supabase.co/storage/v1/object/public/game_pictures/cyberpunk.jpg",
+            gameAlias: ["2077"],
             products: [
                 {
                     platform: "PC",
@@ -101,6 +106,7 @@ async function main() {
         {
             title: "Elden Ring",
             baseImage: "https://jattnvwxvfmassrnzkgh.supabase.co/storage/v1/object/public/game_pictures/elden-ring.jpg",
+            gameAlias: ["ring"],
             products: [
                 {
                     platform: "PC",
@@ -122,6 +128,7 @@ async function main() {
         {
             title: "The Witcher 3: Wild Hunt",
             baseImage: "https://jattnvwxvfmassrnzkgh.supabase.co/storage/v1/object/public/game_pictures/witcher-3.jpg",
+            gameAlias: ["tw3", "witch 3"],
             products: [
                 {
                     platform: "PC",
@@ -142,6 +149,7 @@ async function main() {
         {
             title: "Minecraft",
             baseImage: "https://jattnvwxvfmassrnzkgh.supabase.co/storage/v1/object/public/game_pictures/minecraft.jpg",
+            gameAlias: ["mc", "java", "bedrock"],
             products: [
                 {
                     platform: "PC",
@@ -162,6 +170,7 @@ async function main() {
         {
             title: "Hogwarts Legacy",
             baseImage: "https://jattnvwxvfmassrnzkgh.supabase.co/storage/v1/object/public/game_pictures/hogwarts.jpg",
+            gameAlias: ["hl", "harry potter"],
             products: [
                 {
                     platform: "PC",
@@ -183,13 +192,17 @@ async function main() {
     ];
 
     for (const gameData of gamesData) {
-        const {products, ...gameInfo} = gameData;
+        const {products, gameAlias = [], ...gameInfo} = gameData;
         await prisma.game.create({
             data: {
                 ...gameInfo,
                 products: {
                     // @ts-ignore
                     create: products
+                },
+
+                gameAlias: {
+                    create: gameAlias.map(alias => ({alias: alias.toLowerCase()}))
                 }
             }
         });
