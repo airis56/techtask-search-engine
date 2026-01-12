@@ -1,6 +1,6 @@
 import PlusBadge from "./PlusIcon.jsx";
 import PlatformIcon from "./platforms/PlatformIcon.jsx";
-import { IoHeartOutline } from "react-icons/io5";
+import { IoHeartOutline, IoInformationCircleOutline } from "react-icons/io5";
 
 const random = Math.floor(Math.random() * 1000) + 1;
 
@@ -55,9 +55,24 @@ export default function ProductCard({ item }) {
                             )}
                         </p>
 
-                        <p className="font-metropolis font-semibold leading-5 text-2xl">
-                            €{item.currentPrice}
-                        </p>
+                        <div className="flex items-center gap-1.5">
+                            <p className="font-metropolis font-semibold leading-5 text-2xl">
+                                €{item.currentPrice}
+                            </p>
+                            <div className="relative group/info">
+                                <IoInformationCircleOutline className="text-white/40 hover:text-white cursor-help transition-colors" size={16} />
+                                <div className="absolute bottom-full left-1/2 -translate-x-1/4 mb-2 w-52 p-3 bg-gray-600 border border-white/10 shadow-2xl text-[0.9rem] font-medium opacity-0 group-hover/info:opacity-100 transition-opacity pointer-events-none z-9999">
+                                    {hasDiscount && (
+                                        <p className="mb-2">
+                                            Strike-through price is the recommended retail price, not a reduction of price.
+                                        </p>
+                                    )}
+                                    <p>
+                                        Price is not final. Service fee applies at checkout.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
 
                         {item.cashbackAmount > 0 && (
                             <div className="flex items-center gap-1 text-green-400 text-xs font-metropolis font-semibold leading-7">
