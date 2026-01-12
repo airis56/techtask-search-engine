@@ -29,7 +29,7 @@ export default function SearchBar() {
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Ieškoti žaidimų, papildymų ir daugiau..."
+                placeholder="Search for games..."
                 className="w-full border border-white h-14 py-3 pl-10 pr-4 font-metropolis font-bold text-[1.3rem] placeholder:text-white/60 focus:outline-none bg-transparent"
             />
         </form>
