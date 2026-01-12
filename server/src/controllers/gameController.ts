@@ -9,39 +9,46 @@ export const getGames = async (req: Request, res: Response): Promise<void> => {
 
         if (search) {
             results = await prisma.$queryRaw<any[]>`
-                SELECT
-                    g.id AS "gameId",
-                    g.title,
-                    g."baseImage",
-                    p.id AS "productId",
-                    p.platform,
-                    p.region,
-                    p."distributionType",
-                    p."currentPrice",
-                    p."originalPrice",
-                    p.currency,
-                    p."cashbackAmount",
-                    p."stockStatus",
-                    similarity(g.title, ${search}) AS sim
+                SELECT g.id AS "gameId",
+                       g.title,
+                       g."baseImage",
+
+                       p.id AS "productId",
+                       p.platform,
+                       p.region,
+                       p."distributionType",
+                       p."currentPrice",
+                       p."originalPrice",
+                       p.currency,
+                       p."cashbackAmount",
+                       p."stockStatus",
+
+                       GREATEST(
+                               similarity(g.title, ${search}),
+                               COALESCE(MAX(similarity(a.alias, ${search})), 0)
+                       )    AS score
+
                 FROM "product" p
                          JOIN "game" g ON g.id = p."gameId"
-                WHERE
-                    similarity(g.title, ${search}) > 0.15
+                         LEFT JOIN "game_alias" a ON a."gameId" = g.id
+
+                WHERE similarity(g.title, ${search}) > 0.15
+                   OR similarity(a.alias, ${search}) > 0.2
                    OR g.title ILIKE ${`%${search}%`}
+
+                GROUP BY g.id, p.id
                 ORDER BY
-                    sim DESC,
+                    score DESC,
                     p."currentPrice" ASC
                     LIMIT 50;
             `;
 
-            // Convert Decimal → number
             results = results.map(r => ({
                 ...r,
                 currentPrice: Number(r.currentPrice),
                 originalPrice: Number(r.originalPrice),
                 cashbackAmount: r.cashbackAmount ? Number(r.cashbackAmount) : 0
             }));
-
         } else {
             const games = await prisma.game.findMany({
                 include: {products: true},
