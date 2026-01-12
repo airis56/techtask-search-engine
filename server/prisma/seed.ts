@@ -188,6 +188,7 @@ async function main() {
             data: {
                 ...gameInfo,
                 products: {
+                    // @ts-ignore
                     create: products
                 }
             }
