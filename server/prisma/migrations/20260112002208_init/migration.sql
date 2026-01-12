@@ -1,10 +1,3 @@
-/*
-  Warnings:
-
-  - You are about to drop the `Game` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Product` table. If the table is not empty, all the data it contains will be lost.
-
-*/
 -- CreateEnum
 CREATE TYPE "platform" AS ENUM ('PC', 'XBOX', 'PLAYSTATION', 'NINTENDO');
 
@@ -16,27 +9,6 @@ CREATE TYPE "distributionType" AS ENUM ('KEY', 'ACCOUNT');
 
 -- CreateEnum
 CREATE TYPE "stockStatus" AS ENUM ('IN_STOCK', 'OUT_OF_STOCK', 'LIMITED');
-
--- DropForeignKey
-ALTER TABLE "Product" DROP CONSTRAINT "Product_gameId_fkey";
-
--- DropTable
-DROP TABLE "Game";
-
--- DropTable
-DROP TABLE "Product";
-
--- DropEnum
-DROP TYPE "DistributionType";
-
--- DropEnum
-DROP TYPE "Platform";
-
--- DropEnum
-DROP TYPE "Region";
-
--- DropEnum
-DROP TYPE "StockStatus";
 
 -- CreateTable
 CREATE TABLE "game" (
