@@ -77,6 +77,14 @@ A public, read-only REST API for fetching game data.
 - Cloudflare for DNS
 - Docker
 
+## Tests
+Basic backend tests are included to validate the public API endpoints and the
+core fuzzy search functionality.
+Tests are written with Jest and Supertest.
+
+To run the tests, copy `.env.example` to `.env.test` and fill in the required variables.
+Then run `npm test` from the `server` directory.
+
 ## AI usage
 AI tools (ChatGPT) were used for debugging, architectural discussions,
 and improving code clarity. All final code and decisions were my own.
