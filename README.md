@@ -44,7 +44,8 @@ A public, read-only REST API for fetching game data.
 ### Frontend
 1. Navigate to the `client` directory `cd client`
 2. Install dependencies with `npm install`
-3. Run the development server with `npm run dev`
+3. Copy `.env.example` to `.env` and fill in the required variables
+4. Run the development server with `npm run dev`
 
 ### Backend & Database
 1. Launch database with `docker-compose up -d` from root directory
