@@ -40,6 +40,7 @@ A public, read-only REST API for fetching game data.
 
 ### Prerequisites
 - Docker
+- Node.js 20.x or higher
 
 ### Frontend
 1. Navigate to the `client` directory `cd client`
