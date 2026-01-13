@@ -2,14 +2,15 @@ import PlusBadge from "./PlusIcon.jsx";
 import PlatformIcon from "./platforms/PlatformIcon.jsx";
 import { IoHeartOutline, IoInformationCircleOutline } from "react-icons/io5";
 
-const random = Math.floor(Math.random() * 1000) + 1;
-
 function calculateDiscount(originalPrice, currentPrice) {
     return ((originalPrice - currentPrice) / originalPrice) * 100;
 }
 
 export default function ProductCard({ item }) {
     const hasDiscount = item.originalPrice !== item.currentPrice;
+    
+    // Deterministic random-like number based on productId so it's different per card but stable
+    const heartCount = (parseInt(item.productId.split('-')[0], 16) % 1000) + 1;
 
     return (
         <div className={`group bg-[#1a0640] border ${item.cashbackAmount > 0 ? 'border-[#00ffcc]' : 'border-transparent'} overflow-hidden text-white flex flex-col h-full shadow-sm relative`}>
@@ -45,7 +46,7 @@ export default function ProductCard({ item }) {
                             {hasDiscount ? (
                                 <>
                                     From
-                                    <span className="line-through ml-1">€{item.originalPrice}</span>
+                                    <span className="line-through ml-1">€{item.originalPrice.toFixed(2)}</span>
                                     <span className="ml-1 text-[0.8rem] font-bold text-green-400">
                                         {/* dont divide by 0 */}
                                         -{item.originalPrice > 0
@@ -61,7 +62,7 @@ export default function ProductCard({ item }) {
 
                         <div className="flex items-center gap-1.5">
                             <p className="font-metropolis font-semibold leading-5 text-2xl">
-                                €{item.currentPrice}
+                                €{item.currentPrice.toFixed(2)}
                             </p>
                             <div className="relative group/info">
                                 <IoInformationCircleOutline className="text-white/40 hover:text-white cursor-help transition-colors" size={16} />
@@ -80,14 +81,14 @@ export default function ProductCard({ item }) {
 
                         {item.cashbackAmount > 0 && (
                             <div className="flex items-center gap-1 text-green-400 text-xs font-metropolis font-semibold leading-7">
-                                Cashback: €{item.cashbackAmount}
+                                Cashback: €{item.cashbackAmount.toFixed(2)}
                             </div>
                         )}
                     </div>
 
                     <div className="flex items-center gap-2 text-sm text-white/70">
                         <IoHeartOutline size={18} />
-                        <span className="font-bold">{random}</span>
+                        <span className="font-bold">{heartCount}</span>
                     </div>
 
                     {/* Revealable Buttons */}
