@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Header from "./components/header/Header";
 import Home from "./pages/Home";
 import SearchResults from "./pages/SearchResults";
+import NotFound from "./pages/NotFound";
 
 export default function App() {
     return (
@@ -13,6 +14,7 @@ export default function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/list" element={<SearchResults />} />
+                    <Route path="*" element={<NotFound />} />
                 </Routes>
             </main>
         </div>
