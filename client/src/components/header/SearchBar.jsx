@@ -12,6 +12,22 @@ export default function SearchBar() {
         setQuery(searchParams.get('search') || '');
     }, [searchParams]);
 
+    useEffect(() => {
+        // Don't trigger search-as-you-type if the query hasn't changed from the URL's search param
+        const urlQuery = searchParams.get('search') || '';
+        if (query === urlQuery) return;
+
+        const timeoutId = setTimeout(() => {
+            if (query.trim()) {
+                navigate(`/list?search=${encodeURIComponent(query)}`, { replace: true });
+            } else if (query === '') {
+                navigate('/list', { replace: true });
+            }
+        }, 500); // 500ms debounce
+
+        return () => clearTimeout(timeoutId);
+    }, [query, navigate, searchParams]);
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (query.trim()) {
