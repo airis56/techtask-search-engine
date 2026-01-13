@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { fetchGames } from '../utils/api';
 import ErrorMessage from "../components/ErrorMessage.jsx";
@@ -12,24 +12,36 @@ export default function SearchResults () {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const getGames = async () => {
+    const getGames = useCallback(async (isCancelled = { current: false }) => {
         try {
             setLoading(true);
             setError(null);
             const data = await fetchGames(query);
-            setResults(data);
+            if (!isCancelled.current) {
+                setResults(data);
+            }
         } catch (err) {
-            setError(err.message);
+            if (!isCancelled.current) {
+                setError(err.message);
+            }
         } finally {
-            setLoading(false);
+            if (!isCancelled.current) {
+                setLoading(false);
+            }
         }
-    };
-
-    useEffect(() => {
-        getGames();
     }, [query]);
 
-    if (error) return <ErrorMessage message={error} onRetry={getGames} />;
+    useEffect(() => {
+        const cancellation = { current: false };
+        getGames(cancellation);
+        return () => {
+            cancellation.current = true;
+        };
+    }, [getGames]);
+
+    const handleRetry = () => getGames();
+
+    if (error) return <ErrorMessage message={error} onRetry={handleRetry} />;
 
     if (!loading && results.length === 0) {
         return (
