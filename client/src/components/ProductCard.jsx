@@ -51,6 +51,7 @@ export default function ProductCard({ item }) {
                                         -{item.originalPrice > 0
                                             ? calculateDiscount(item.originalPrice, item.currentPrice).toFixed(0)
                                             : ''}
+                                        %
                                     </span>
                                 </>
                             ) : (
