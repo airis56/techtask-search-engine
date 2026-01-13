@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { fetchGames } from '../utils/api';
 import ErrorMessage from "../components/ErrorMessage.jsx";
-import Loading from "../components/Loading.jsx";
 import ProductCard from "../components/ProductCard.jsx";
+import ProductCardSkeleton from "../components/ProductCardSkeleton.jsx";
 
 export default function SearchResults () {
     const [searchParams] = useSearchParams();
@@ -29,11 +29,9 @@ export default function SearchResults () {
         getGames();
     }, [query]);
 
-    // Clean conditional rendering
-    if (loading) return <Loading message={query ? `Searching for "${query}"...` : 'Searching...'} />;
     if (error) return <ErrorMessage message={error} onRetry={getGames} />;
 
-    if (results.length === 0) {
+    if (!loading && results.length === 0) {
         return (
             <div className="flex flex-col items-center justify-center w-full py-20 text-center">
                 <div className="bg-white/10 rounded-full p-8 mb-6 border border-white/5">
@@ -53,13 +51,23 @@ export default function SearchResults () {
         <div className="flex justify-center w-full">
             <div className="w-full max-w-300 px-4">
                 <h2 className="text-white text-[1rem] mb-6">
-                    Results found: <span className="font-bold">{results.length}</span>
+                    {loading ? (
+                        <div className="h-4 bg-white/10 rounded w-32 animate-pulse" />
+                    ) : (
+                        <>Results found: <span className="font-bold">{results.length}</span></>
+                    )}
                 </h2>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    {results.map(item => (
-                        <ProductCard key={item.productId} item={item} />
-                    ))}
+                    {loading ? (
+                        Array.from({ length: 8 }).map((_, i) => (
+                            <ProductCardSkeleton key={i} />
+                        ))
+                    ) : (
+                        results.map(item => (
+                            <ProductCard key={item.productId} item={item} />
+                        ))
+                    )}
                 </div>
             </div>
         </div>
