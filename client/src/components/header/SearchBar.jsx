@@ -95,7 +95,7 @@ export default function SearchBar() {
     };
 
     return (
-        <div ref={wrapperRef} className="relative flex-[0_1_550px] min-w-50">
+        <div ref={wrapperRef} className="relative w-full md:max-w-137.5">
             <form onSubmit={handleSubmit} className="relative z-50">
                 <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
                     <IoSearchOutline size={22} className="text-white"/>
@@ -124,7 +124,7 @@ export default function SearchBar() {
                                 className="group w-full flex items-center gap-3 px-4 py-2 hover:bg-white/10 cursor-pointer transition-colors"
                             >
                                 <IoTimeOutline size={18} className="text-white/40 group-hover:text-white transition-colors" />
-                                <span className="flex-grow font-bold text-[1rem]">{term}</span>
+                                <span className="grow font-bold text-[1rem]">{term}</span>
                                 <button
                                     onClick={(e) => removeRecentSearch(e, term)}
                                     className="p-1 hover:bg-white/20 rounded-full transition-colors"
