@@ -22,6 +22,10 @@ A public, read-only REST API for fetching game data.
 - GET `/list?search=` - returns a list of games matching the search query
 - Designed to be consumed by any frontend or external services
 
+## Rate limiting
+- Rate limiter is implemented using `express-rate-limit` middleware.
+- Requests are limited to 100 requests per minute.
+
 ### UI
 - Card-based responsive layout
 - Uses hover states for additional information
