@@ -1,12 +1,13 @@
 import express from "express";
 import cors from "cors";
 import { getGames } from "./controllers/gameController";
+import dotenv from 'dotenv/config';
 
 const app = express();
 
 const allowedOrigins = [
-    "http://localhost:5173",         // Vite dev
-    "https://enebatask.skalskis.me" // production
+    "http://localhost:5173",       // Vite dev
+    process.env.PRODUCTION_ORIGIN // production
 ];
 
 app.use(cors({
