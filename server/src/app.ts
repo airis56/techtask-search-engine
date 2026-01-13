@@ -33,4 +33,21 @@ app.get("/api/health", (req, res) => {
 
 app.get("/list", getGames);
 
+// Centralized error handling
+app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+    console.error(`[Error] ${req.method} ${req.path}:`, err.message || err);
+
+    // Handle JSON parsing errors specifically
+    if (err instanceof SyntaxError && 'status' in err && err.status === 400 && 'body' in err) {
+        return res.status(400).json({ error: "Invalid JSON payload" });
+    }
+
+    // Don't leak technical details in production
+    const message = process.env.NODE_ENV === 'production' 
+        ? "An internal server error occurred" 
+        : err.message || "Internal server error";
+
+    res.status(err.status || 500).json({ error: message });
+});
+
 export default app;
