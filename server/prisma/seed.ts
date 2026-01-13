@@ -2,6 +2,7 @@ import { prisma } from "../src/config/db";
 
 async function main() {
     await prisma.product.deleteMany();
+    await prisma.game_alias.deleteMany();
     await prisma.game.deleteMany();
     await prisma.game_alias.deleteMany();
 
