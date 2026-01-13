@@ -33,6 +33,22 @@ export default function SearchResults () {
     if (loading) return <Loading message={query ? `Searching for "${query}"...` : 'Searching...'} />;
     if (error) return <ErrorMessage message={error} onRetry={getGames} />;
 
+    if (results.length === 0) {
+        return (
+            <div className="flex flex-col items-center justify-center w-full py-20 text-center">
+                <div className="bg-white/10 rounded-full p-8 mb-6 border border-white/5">
+                    <img src="/logo.svg" alt="No results" className="w-16 h-16 opacity-30 animate-pulse" />
+                </div>
+                <h2 className="text-3xl font-black mb-3 uppercase italic tracking-tighter">No results found</h2>
+                <p className="text-white/50 max-w-md text-lg">
+                    We couldn't find any games matching <span className="text-white font-bold italic">"{query}"</span>.
+                    <br/>
+                    Try checking for typos or use more general terms.
+                </p>
+            </div>
+        );
+    }
+
     return (
         <div className="flex justify-center w-full">
             <div className="w-full max-w-300 px-4">
