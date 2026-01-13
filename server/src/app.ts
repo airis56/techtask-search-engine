@@ -1,9 +1,21 @@
 import express from "express";
 import cors from "cors";
+import { rateLimit } from 'express-rate-limit';
 import { getGames } from "./controllers/gameController";
 import dotenv from 'dotenv/config';
 
 const app = express();
+
+const limiter = rateLimit({
+	windowMs: 60 * 1000, // 1 minute
+	limit: 100, // Limit each IP to 100 requests per `window` (here, per 1 minute).
+	standardHeaders: 'draft-7', // bpr: draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
+    message: { error: "Too many requests, please try again later." }
+});
+
+// Apply the rate limiting middleware to all requests.
+app.use(limiter);
 
 const allowedOrigins = [
     "http://localhost:5173",       // Vite dev
