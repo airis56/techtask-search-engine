@@ -13,7 +13,7 @@ export default function ProductCard({ item }) {
 
     return (
         <div className={`group bg-[#1a0640] border ${item.cashbackAmount > 0 ? 'border-[#00ffcc]' : 'border-transparent'} overflow-hidden text-white flex flex-col h-full shadow-sm relative`}>
-            <div className="relative aspect-3/4 shrink-0">
+            <div className="relative aspect-3/4 shrink-0 overflow-hidden">
                 <img src={item.baseImage} alt={item.title} className="w-full h-full object-cover" />
             </div>
 
@@ -35,7 +35,7 @@ export default function ProductCard({ item }) {
                         {item.title}
                     </h3>
 
-                    <p className="+ text-[#00ffcc] text-[0.9rem] font-semibold uppercase mb-3 tracking-wide">
+                    <p className="text-[#00ffcc] text-[0.9rem] font-semibold uppercase mb-3 tracking-wide">
                         {item.region}
                     </p>
 
