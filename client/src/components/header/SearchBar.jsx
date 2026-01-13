@@ -12,8 +12,13 @@ export default function SearchBar() {
 
     // Load recent searches on mount
     useEffect(() => {
-        const saved = JSON.parse(localStorage.getItem('recentSearches') || '[]');
-        setRecentSearches(saved);
+        try {
+            const saved = JSON.parse(localStorage.getItem('recentSearches') || '[]');
+            setRecentSearches(Array.isArray(saved) ? saved : []);
+        } catch (e) {
+            console.error("Failed to parse recent searches", e);
+            setRecentSearches([]);
+        }
     }, []);
 
     // Keep input in sync with URL
@@ -35,12 +40,15 @@ export default function SearchBar() {
     // Debounced navigation (search-as-you-type)
     useEffect(() => {
         const urlQuery = searchParams.get('search') || '';
-        if (query === urlQuery) return;
+        const trimmedQuery = query.trim();
+        
+        // Skip if the effective query (trimmed) hasn't changed relative to the URL
+        if (trimmedQuery === urlQuery) return;
 
         const timeoutId = setTimeout(() => {
-            if (query.trim()) {
-                navigate(`/list?search=${encodeURIComponent(query)}`, { replace: true });
-            } else if (query === '') {
+            if (trimmedQuery) {
+                navigate(`/list?search=${encodeURIComponent(trimmedQuery)}`, { replace: true });
+            } else {
                 navigate('/list', { replace: true });
             }
         }, 500); // 500ms debounce for navigation
@@ -50,8 +58,8 @@ export default function SearchBar() {
 
 
     const saveSearch = (term) => {
-        if (!term || !term.trim()) return;
-        const termToSave = term.trim();
+        const termToSave = term?.trim();
+        if (!termToSave) return;
         
         setRecentSearches(prev => {
             const updated = [termToSave, ...prev.filter(s => s !== termToSave)].slice(0, 5);
@@ -71,9 +79,10 @@ export default function SearchBar() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (query.trim()) {
-            navigate(`/list?search=${encodeURIComponent(query)}`);
-            saveSearch(query);
+        const trimmed = query.trim();
+        if (trimmed) {
+            navigate(`/list?search=${encodeURIComponent(trimmed)}`);
+            saveSearch(trimmed);
             setIsFocused(false);
         }
     };
